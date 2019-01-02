@@ -1,0 +1,56 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using CodeforcesDocsParser.Types;
+using HtmlAgilityPack;
+
+namespace CodeforcesDocsParser
+{
+    public static class ModelsParser
+    {
+        private const string Url = "https://codeforces.com/api/help/objects";
+
+        private static HtmlNode LoadContentNode()
+        {
+            var client = new HtmlWeb();
+            HtmlDocument doc = client.Load(Url);
+
+            HtmlNode contentNode = doc
+                .DocumentNode
+                .Descendants()
+                .First(node => node.Attributes?["class"]?.Value == "ttypography");
+
+            return contentNode;
+        }
+
+        private static List<(string name, string description)> GetDataFromTable(HtmlNode table)
+        {
+            HtmlNode body = table.Element("tbody");
+            var result = new List<(string name, string description)>();
+            foreach (HtmlNode child in body.ChildNodes.TagOnly())
+            {
+                HtmlNode[] elements = child.ChildNodes.TagOnly().ToArray();
+                result.Add((elements[0].InnerText, elements[1].InnerText));
+            }
+
+            return result;
+        }
+
+        public static List<ClassDescriptor> GroupByClass()
+        {
+            HtmlNode contentNode = LoadContentNode();
+
+            // Remove <h1>Return objects</h1>
+            HtmlNode[] elements = contentNode.ChildNodes.TagOnly().Skip(1).ToArray();
+            List<ClassDescriptor> classes = new List<ClassDescriptor>();
+            for (int i = 0; i < elements.Length; i += 3)
+            {
+                string className = elements[i].InnerText;
+                string description = elements[i + 1].InnerText;
+                List<(string name, string description)> properties = GetDataFromTable(elements[i + 2]);
+                classes.Add(new ClassDescriptor(className, description, properties));
+            }
+
+            return classes;
+        }
+    }
+}
