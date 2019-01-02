@@ -35,6 +35,12 @@ namespace CodeforcesDocsParser.TypeGenerator
 
             (string type, string summary) = second.SplitDescription();
 
+            //TODO: Dirty hacks. Request Mike for fix
+            if (first.Trim().ToLower() == "judgeprotocol")
+            {
+                return new PropertyDescriptor(first, "Object", summary);
+            }
+
             if (type.NthWord(1) == "List")
             {
                 return new PropertyDescriptor(first, $"{second.NthWord(3)}[]", summary);
@@ -53,12 +59,6 @@ namespace CodeforcesDocsParser.TypeGenerator
             if (type.NthWord(2) == "object")
             {
                 return new PropertyDescriptor(first, type.NthWord(1), summary);
-            }
-
-            //TODO: Dirty hacks. Request Mike for fix
-            if (first == "judgeProtocol")
-            {
-                return new PropertyDescriptor(first, "Object", summary);
             }
 
             return new PropertyDescriptor(first, type, summary);

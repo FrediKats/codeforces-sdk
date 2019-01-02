@@ -13,8 +13,24 @@ namespace CodeforcesDocsParser.Types
 
             Name = $"{className}{propertyName}Enum";
 
+            //TODO: One more dirty hack
+            if (propertyName == "Testset")
+            {
+                Values = description
+                    .Remove(0, 6)
+                    .Split(", ")
+                    .Select(v => v.Trim())
+                    .Select(v => v.SnakeToCammelCase())
+                    .ToList();
+                Values[Values.Count - 1] = Values[Values.Count - 1].Split('.').First();
+                Values.Remove("...");
+                return;
+            }
+
             Values = description
                 .Remove(0, 6)
+                .Split('.')
+                .First()
                 .Split(", ")
                 .Select(v => v.Trim())
                 .Select(v => v.SnakeToCammelCase())

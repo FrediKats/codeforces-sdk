@@ -16,6 +16,8 @@ namespace CodeforcesDocsParser
                 classInformation += string.Join("\n", descriptor.Properties);
                 Console.WriteLine(classInformation);
             }
+
+            SharpCodeGenerator generator = new SharpCodeGenerator("Codeforces.Model", descriptors, EnumStorage.Enums);
         }
     }
 }
