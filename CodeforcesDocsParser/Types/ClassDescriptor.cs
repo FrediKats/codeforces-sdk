@@ -4,15 +4,15 @@ namespace CodeforcesDocsParser.Types
 {
     public class ClassDescriptor
     {
-        public ClassDescriptor(string className, string description, List<PropertyDescriptor> properties)
+        public ClassDescriptor(string className, string summary, List<PropertyDescriptor> properties)
         {
             ClassName = className;
-            Description = description;
+            Summary = summary;
             Properties = properties;
         }
 
         public string ClassName { get; set; }
-        public string Description { get; set; }
+        public string Summary { get; set; }
         public List<PropertyDescriptor> Properties { get; set; }
     }
 }

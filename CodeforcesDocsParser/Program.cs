@@ -12,7 +12,7 @@ namespace CodeforcesDocsParser
             List<ClassDescriptor> descriptors = ModelsParser.GroupByClass();
             foreach (ClassDescriptor descriptor in descriptors)
             {
-                string classInformation = $"\n{descriptor.ClassName} ({descriptor.Description})\n";
+                string classInformation = $"\n{descriptor.ClassName} ({descriptor.Summary})\n";
                 classInformation += string.Join("\n", descriptor.Properties);
                 Console.WriteLine(classInformation);
             }

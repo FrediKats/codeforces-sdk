@@ -11,7 +11,7 @@ namespace CodeforcesDocsParser.TypeGenerator
             return (firstLetter + name.Remove(0, 1)).Trim();
         }
 
-        public static string SnakeToCammelCase(this string name)
+        public static string SnakeToCamelCase(this string name)
         {
             return name
                 .ToLower()
@@ -22,16 +22,14 @@ namespace CodeforcesDocsParser.TypeGenerator
 
         public static (string type, string description) SplitDescription(this string s)
         {
-            var data = s.Split('.');
-            return (data[0], s.Remove(0, data[0].Length));
+            string[] data = s.Split('.');
+            return (data[0], s.Remove(0, data[0].Length).TrimStart('.', ' '));
         }
 
         public static string NthWord(this string s, int position)
         {
-            var words = s.Split(' ');
-            if (words.Length < position)
-                return null;
-            return words[position - 1];
+            string[] words = s.Split(' ');
+            return words.Length < position ? null : words[position - 1];
         }
     }
 }

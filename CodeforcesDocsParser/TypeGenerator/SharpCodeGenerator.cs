@@ -49,10 +49,18 @@ namespace CodeforcesDocsParser.TypeGenerator
         {
             var rows = new List<string>();
 
+            if (string.IsNullOrEmpty(classDescriptor.Summary) == false)
+            {
+                rows.AddRange(AsSummaryTag(classDescriptor.Summary));
+            }
             rows.Add($"public class {classDescriptor.ClassName}");
             rows.Add("{");
             foreach (PropertyDescriptor property in classDescriptor.Properties)
             {
+                if (string.IsNullOrEmpty(property.Summary) == false)
+                {
+                    rows.AddRange(AsSummaryTag(property.Summary).Select(s => $"\t{s}"));
+                }
                 string sharpType = ToBaseType(property.Type);
                 rows.Add($"\tpublic {sharpType} {property.Name}" + " { get; set; }");
             }
@@ -66,6 +74,10 @@ namespace CodeforcesDocsParser.TypeGenerator
         {
             var rows = new List<string>();
 
+            if (string.IsNullOrEmpty(enumDescriptor.Summary) == false)
+            {
+                rows.AddRange(AsSummaryTag(enumDescriptor.Summary));
+            }
             rows.Add($"public enum {enumDescriptor.Name}");
             rows.Add("{");
             foreach (string value in enumDescriptor.Values)
@@ -101,6 +113,16 @@ namespace CodeforcesDocsParser.TypeGenerator
                 default:
                     return type;
             }
+        }
+
+        private static List<string> AsSummaryTag(string description)
+        {
+            return new List<string>
+            {
+                "/// <summary>",
+                $"/// \t{description}",
+                "/// </summary>"
+            };
         }
     }
 }
