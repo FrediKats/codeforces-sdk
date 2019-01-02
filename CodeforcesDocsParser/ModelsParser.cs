@@ -32,11 +32,33 @@ namespace CodeforcesDocsParser
                 HtmlNode[] elements = child.ChildNodes.TagOnly().ToArray();
                 string propertyName = elements[0].InnerText;
                 string propertyDescription = elements[1].InnerText;
-                var property = new PropertyDescriptor(propertyName, propertyDescription);
-                result.Add(property);
+
+                EnumDescriptor enumTypeProperty = TryParseEnum(propertyName, propertyDescription);
+                if (enumTypeProperty != null)
+                {
+                    //TODO: add summary
+                    result.Add(new PropertyDescriptor(propertyName, enumTypeProperty.Name, null));
+                }
+                else
+                {
+                    result.Add(PropertyDescriptor.FromRow(propertyName, propertyDescription));
+                }
             }
 
             return result;
+        }
+
+        private static EnumDescriptor TryParseEnum(string propertyName, string propertyDescription)
+        {
+            //TODO: Add class name as name
+            if (propertyDescription.Contains("Enum:"))
+            {
+                return EnumStorage.AddNew("", propertyName, propertyDescription);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static List<ClassDescriptor> GroupByClass()
