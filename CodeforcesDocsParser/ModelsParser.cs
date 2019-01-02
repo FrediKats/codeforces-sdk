@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeforcesDocsParser.Tools;
 using CodeforcesDocsParser.Types;
 using HtmlAgilityPack;
 
@@ -22,14 +23,17 @@ namespace CodeforcesDocsParser
             return contentNode;
         }
 
-        private static List<(string name, string description)> GetDataFromTable(HtmlNode table)
+        private static List<PropertyDescriptor> GetDataFromTable(HtmlNode table)
         {
             HtmlNode body = table.Element("tbody");
-            var result = new List<(string name, string description)>();
+            var result = new List<PropertyDescriptor>();
             foreach (HtmlNode child in body.ChildNodes.TagOnly())
             {
                 HtmlNode[] elements = child.ChildNodes.TagOnly().ToArray();
-                result.Add((elements[0].InnerText, elements[1].InnerText));
+                string propertyName = elements[0].InnerText;
+                string propertyDescription = elements[1].InnerText;
+                var property = new PropertyDescriptor(propertyName, propertyDescription);
+                result.Add(property);
             }
 
             return result;
@@ -41,12 +45,14 @@ namespace CodeforcesDocsParser
 
             // Remove <h1>Return objects</h1>
             HtmlNode[] elements = contentNode.ChildNodes.TagOnly().Skip(1).ToArray();
-            List<ClassDescriptor> classes = new List<ClassDescriptor>();
+            var classes = new List<ClassDescriptor>();
+
             for (int i = 0; i < elements.Length; i += 3)
             {
                 string className = elements[i].InnerText;
                 string description = elements[i + 1].InnerText;
-                List<(string name, string description)> properties = GetDataFromTable(elements[i + 2]);
+                List<PropertyDescriptor> properties = GetDataFromTable(elements[i + 2]);
+
                 classes.Add(new ClassDescriptor(className, description, properties));
             }
 

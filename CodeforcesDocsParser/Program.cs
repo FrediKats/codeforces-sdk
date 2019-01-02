@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using CodeforcesDocsParser.Types;
 
 namespace CodeforcesDocsParser
@@ -13,7 +12,7 @@ namespace CodeforcesDocsParser
             foreach (ClassDescriptor descriptor in descriptors)
             {
                 string classInformation = $"\n{descriptor.ClassName} ({descriptor.Description})\n";
-                classInformation += string.Join("\n", descriptor.Properties.Select(p => $"{p.name}: {p.description}"));
+                classInformation += string.Join("\n", descriptor.Properties);
                 Console.WriteLine(classInformation);
             }
         }

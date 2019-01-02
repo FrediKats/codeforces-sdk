@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CodeforcesDocsParser.Types
 {
     public class ClassDescriptor
     {
-        public ClassDescriptor()
-        {
-        }
-
-        public ClassDescriptor(string className, string description, List<(string name, string description)> properties)
+        public ClassDescriptor(string className, string description, List<PropertyDescriptor> properties)
         {
             ClassName = className;
             Description = description;
@@ -17,6 +14,6 @@ namespace CodeforcesDocsParser.Types
 
         public string ClassName { get; set; }
         public string Description { get; set; }
-        public List<(string name, string description)> Properties { get; set; }
+        public List<PropertyDescriptor> Properties { get; set; }
     }
 }

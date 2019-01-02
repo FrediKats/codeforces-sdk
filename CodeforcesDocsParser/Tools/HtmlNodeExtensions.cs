@@ -2,12 +2,12 @@
 using System.Linq;
 using HtmlAgilityPack;
 
-namespace CodeforcesDocsParser
+namespace CodeforcesDocsParser.Tools
 {
     public static class HtmlNodeExtensions
     {
         /// <summary>
-        /// Remove useless element from child list
+        ///     Remove useless element from child list
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>
