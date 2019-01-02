@@ -10,4 +10,8 @@
     <PackageReference Include="Refit" Version="4.6.58" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Types\" />
+  </ItemGroup>
+
 </Project>
