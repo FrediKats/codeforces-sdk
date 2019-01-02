@@ -11,7 +11,7 @@ namespace CodeforcesDocsParser.Types
 
         public EnumDescriptor(string className, string propertyName, string description)
         {
-            //className = className.LowerToUpperCamelCase();
+            className = className.LowerToUpperCamelCase();
             propertyName = propertyName.LowerToUpperCamelCase();
 
             Name = $"{className}{propertyName}Enum";

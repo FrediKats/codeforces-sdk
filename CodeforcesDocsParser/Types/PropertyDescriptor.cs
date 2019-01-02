@@ -6,14 +6,13 @@ namespace CodeforcesDocsParser.Types
     {
         public PropertyDescriptor(string name, string type, string summary)
         {
-            Name = name;
+            Name = name.LowerToUpperCamelCase();
             Type = type;
             Summary = summary;
         }
 
         public static PropertyDescriptor FromRow(string name, string description)
         {
-            name = name.LowerToUpperCamelCase();
             string[] stringParts = description.Split(".");
 
             string type = stringParts[0];

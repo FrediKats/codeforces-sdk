@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeforcesDocsParser.HtmlDocsParser;
 using CodeforcesDocsParser.Tools;
 using CodeforcesDocsParser.Types;
 using HtmlAgilityPack;
@@ -8,77 +9,32 @@ namespace CodeforcesDocsParser
 {
     public static class ModelsParser
     {
-        private const string Url = "https://codeforces.com/api/help/objects";
-
-        private static HtmlNode LoadContentNode()
-        {
-            var client = new HtmlWeb();
-            HtmlDocument doc = client.Load(Url);
-
-            HtmlNode contentNode = doc
-                .DocumentNode
-                .Descendants()
-                .First(node => node.Attributes?["class"]?.Value == "ttypography");
-
-            return contentNode;
-        }
-
-        private static List<PropertyDescriptor> GetDataFromTable(HtmlNode table)
-        {
-            HtmlNode body = table.Element("tbody");
-            var result = new List<PropertyDescriptor>();
-            foreach (HtmlNode child in body.ChildNodes.TagOnly())
-            {
-                HtmlNode[] elements = child.ChildNodes.TagOnly().ToArray();
-                string propertyName = elements[0].InnerText;
-                string propertyDescription = elements[1].InnerText;
-
-                EnumDescriptor enumTypeProperty = TryParseEnum(propertyName, propertyDescription);
-                if (enumTypeProperty != null)
-                {
-                    //TODO: add summary
-                    result.Add(new PropertyDescriptor(propertyName, enumTypeProperty.Name, null));
-                }
-                else
-                {
-                    result.Add(PropertyDescriptor.FromRow(propertyName, propertyDescription));
-                }
-            }
-
-            return result;
-        }
-
-        private static EnumDescriptor TryParseEnum(string propertyName, string propertyDescription)
-        {
-            //TODO: Add class name as name
-            if (propertyDescription.Contains("Enum:"))
-            {
-                return EnumStorage.AddNew("", propertyName, propertyDescription);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public static List<ClassDescriptor> GroupByClass()
         {
-            HtmlNode contentNode = LoadContentNode();
-
-            // Remove <h1>Return objects</h1>
-            HtmlNode[] elements = contentNode.ChildNodes.TagOnly().Skip(1).ToArray();
+            List<DocsObject> docsObjects = PageParser.ParsePage();
             var classes = new List<ClassDescriptor>();
 
-            for (int i = 0; i < elements.Length; i += 3)
+            foreach (DocsObject docsObject in docsObjects)
             {
-                string className = elements[i].InnerText;
-                string description = elements[i + 1].InnerText;
-                List<PropertyDescriptor> properties = GetDataFromTable(elements[i + 2]);
+                List<PropertyDescriptor> properties = docsObject
+                    .TableRows
+                    .Select(r => GetDescriptor(docsObject, r.Item1, r.Item2))
+                    .ToList();
 
-                classes.Add(new ClassDescriptor(className, description, properties));
+                classes.Add(new ClassDescriptor(docsObject.Header, docsObject.Description, properties));
+            }
+            return classes;
+        }
+
+        private static PropertyDescriptor GetDescriptor(DocsObject docsObject, string first, string second)
+        {
+            if (second.Contains("Enum:"))
+            {
+                EnumDescriptor enumType = EnumStorage.AddNew(docsObject.Header, first, second);
+                return new PropertyDescriptor(first, enumType.Name, second);
             }
 
-            return classes;
+            return PropertyDescriptor.FromRow(first, second);
         }
     }
 }
