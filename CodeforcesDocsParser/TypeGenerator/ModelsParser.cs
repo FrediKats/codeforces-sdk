@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodeforcesDocsParser.HtmlDocsParser;
-using CodeforcesDocsParser.Tools;
 using CodeforcesDocsParser.Types;
-using HtmlAgilityPack;
 
-namespace CodeforcesDocsParser
+namespace CodeforcesDocsParser.TypeGenerator
 {
     public static class ModelsParser
     {
@@ -23,6 +21,7 @@ namespace CodeforcesDocsParser
 
                 classes.Add(new ClassDescriptor(docsObject.Header, docsObject.Description, properties));
             }
+
             return classes;
         }
 
@@ -34,7 +33,35 @@ namespace CodeforcesDocsParser
                 return new PropertyDescriptor(first, enumType.Name, second);
             }
 
-            return PropertyDescriptor.FromRow(first, second);
+            (string type, string summary) = second.SplitDescription();
+
+            if (type.NthWord(1) == "List")
+            {
+                return new PropertyDescriptor(first, $"{second.NthWord(3)}[]", summary);
+            }
+
+            if (type.NthWord(1) == "Floating")
+            {
+                return new PropertyDescriptor(first, "Double", summary);
+            }
+
+            if (type == "String list")
+            {
+                return new PropertyDescriptor(first, "String[]", summary);
+            }
+
+            if (type.NthWord(2) == "object")
+            {
+                return new PropertyDescriptor(first, type.NthWord(1), summary);
+            }
+
+            //TODO: Dirty hacks. Request Mike for fix
+            if (first == "judgeProtocol")
+            {
+                return new PropertyDescriptor(first, "Object", summary);
+            }
+
+            return new PropertyDescriptor(first, type, summary);
         }
     }
 }

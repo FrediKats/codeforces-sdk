@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeforcesDocsParser.Tools;
 using HtmlAgilityPack;
 
 namespace CodeforcesDocsParser.HtmlDocsParser
 {
-    public class PageParser
+    public static class PageParser
     {
         private const string Url = "https://codeforces.com/api/help/objects";
 

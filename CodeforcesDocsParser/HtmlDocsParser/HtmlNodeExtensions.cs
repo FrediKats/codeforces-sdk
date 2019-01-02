@@ -2,7 +2,7 @@
 using System.Linq;
 using HtmlAgilityPack;
 
-namespace CodeforcesDocsParser.Tools
+namespace CodeforcesDocsParser.HtmlDocsParser
 {
     public static class HtmlNodeExtensions
     {

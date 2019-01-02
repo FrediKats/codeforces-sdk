@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodeforcesDocsParser.TypeGenerator;
 using CodeforcesDocsParser.Types;
 
 namespace CodeforcesDocsParser

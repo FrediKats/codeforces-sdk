@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeforcesDocsParser.Tools;
+using CodeforcesDocsParser.TypeGenerator;
 
 namespace CodeforcesDocsParser.Types
 {
     public class EnumDescriptor
     {
-        public string Name { get; set; }
-        public List<string> Values { get; set; }
-
         public EnumDescriptor(string className, string propertyName, string description)
         {
             className = className.LowerToUpperCamelCase();
@@ -23,5 +20,8 @@ namespace CodeforcesDocsParser.Types
                 .Select(v => v.SnakeToCammelCase())
                 .ToList();
         }
+
+        public string Name { get; set; }
+        public List<string> Values { get; set; }
     }
 }

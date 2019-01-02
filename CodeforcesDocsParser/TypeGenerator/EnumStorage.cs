@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeforcesDocsParser.Types;
 
-namespace CodeforcesDocsParser.Tools
+namespace CodeforcesDocsParser.TypeGenerator
 {
     public static class EnumStorage
     {

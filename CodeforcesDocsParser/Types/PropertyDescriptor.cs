@@ -1,4 +1,4 @@
-﻿using CodeforcesDocsParser.Tools;
+﻿using CodeforcesDocsParser.TypeGenerator;
 
 namespace CodeforcesDocsParser.Types
 {
@@ -10,20 +10,6 @@ namespace CodeforcesDocsParser.Types
             Type = type;
             Summary = summary;
         }
-
-        public static PropertyDescriptor FromRow(string name, string description)
-        {
-            string[] stringParts = description.Split(".");
-
-            string type = stringParts[0];
-            string summary = null;
-            if (stringParts.Length > 1)
-            {
-                summary = stringParts[1];
-            }
-            return new PropertyDescriptor(name, type, summary);
-        }
-
 
         public string Name { get; set; }
         public string Type { get; set; }
