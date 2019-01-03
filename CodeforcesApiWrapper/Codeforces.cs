@@ -5,13 +5,19 @@ namespace CodeforcesApiWrapper
 {
     public class Codeforces
     {
+        private const string ApiUrl = "http://codeforces.com/api";
+
         public Codeforces()
         {
-            BlogEntity = RestService.For<IBlogEntityMethods>("http://codeforces.com/api");
-            Contest = RestService.For<IContestMethods>("http://codeforces.com/api");
+            BlogEntity = RestService.For<IBlogEntityMethods>(ApiUrl);
+            Contest = RestService.For<IContestMethods>(ApiUrl);
+            ProblemSet = RestService.For<IProblemSetMethods>(ApiUrl);
+            RecentActions = RestService.For<IRecentActionsMethods>(ApiUrl);
         }
 
         public IBlogEntityMethods BlogEntity { get; }
         public IContestMethods Contest { get; }
+        public IProblemSetMethods ProblemSet { get; }
+        public IRecentActionsMethods RecentActions { get; }
     }
 }
