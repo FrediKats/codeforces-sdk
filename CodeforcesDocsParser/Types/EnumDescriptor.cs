@@ -16,30 +16,34 @@ namespace CodeforcesDocsParser.Types
             //TODO: One more dirty hack
             if (propertyName == "Testset")
             {
-                Values = description
+                RealValues = description
                     .Remove(0, 6)
                     .Split(", ")
                     .Select(v => v.Trim())
-                    .Select(v => v.SnakeToCamelCase())
                     .ToList();
-                Values[Values.Count - 1] = Values[Values.Count - 1].Split('.').First();
-                Values.Remove("...");
-                return;
+
+                RealValues[RealValues.Count - 1] = RealValues[RealValues.Count - 1].Split('.').First();
+                RealValues.Remove("...");
+
+                Values = RealValues.Select(v => v.SnakeToCamelCase()).ToList();
+;                return;
             }
 
-            Values = description
+            RealValues = description
                 .Remove(0, 6)
                 .Split('.')
                 .First()
                 .Split(", ")
                 .Select(v => v.Trim())
-                .Select(v => v.SnakeToCamelCase())
                 .ToList();
+
+            Values = RealValues.Select(v => v.SnakeToCamelCase()).ToList();
             Summary = description.Split('.').Skip(1).Aggregate((a, b) => $"{a}. {b}");
         }
 
         public string Name { get; set; }
         public List<string> Values { get; set; }
+        public List<string> RealValues { get; set; }
         public string Summary { get; set; }
     }
 }

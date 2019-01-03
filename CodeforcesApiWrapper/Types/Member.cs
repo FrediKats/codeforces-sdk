@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace CodeforcesApiWrapper.Types
 {
 	/// <summary>
@@ -9,5 +11,6 @@ namespace CodeforcesApiWrapper.Types
 		/// 	Codeforces user handle.
 		/// </summary>
 		public string Handle { get; set; }
+	
 	}
 }

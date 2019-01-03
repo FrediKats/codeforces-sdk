@@ -19,7 +19,7 @@ namespace CodeforcesApiWrapper.Methods
 
         //TODO: implement handles
         [Get("/contest.standings")]
-        Task<ResponseContainer<List<Standing>>> Standings(int contestId, int? from = null, int? count = null,
+        Task<ResponseContainer<Standing>> Standings(int contestId, int? from = null, int? count = null,
             int? room = null, bool? showUnofficial = null);
 
         [Get("/contest.status")]

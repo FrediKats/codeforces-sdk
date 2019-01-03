@@ -42,7 +42,6 @@ namespace CodeforcesApiWrapper.Test
 
             Contest firstContest = contests.First();
             Assert.IsNotNull(firstContest);
-            Assert.IsNotNull(firstContest.Description);
             Assert.IsNotNull(firstContest.Phase);
             Assert.IsNotNull(firstContest.Name);
         }
@@ -81,19 +80,17 @@ namespace CodeforcesApiWrapper.Test
         {
             var codeforces = new Codeforces();
             const int elementCount = 10;
-            ResponseContainer<List<Standing>> response =
-                codeforces.Contest.Standings(556, 2, elementCount, showUnofficial: true).Result;
+            ResponseContainer<Standing> response =
+                codeforces.Contest.Standings(556, 2, count: elementCount, showUnofficial: true).Result;
 
             Assert.AreEqual("OK", response.Status);
 
-            List<Standing> standings = response.Result;
-            Assert.IsNotNull(standings);
-            Assert.AreEqual(elementCount, standings.Count);
-
-            Standing standing = standings.First();
+            Standing standing = response.Result;
+            Assert.IsNotNull(standing);
             Assert.IsNotNull(standing.Contest);
             Assert.IsNotNull(standing.Problems);
             Assert.IsNotNull(standing.Rows);
+            Assert.AreEqual(elementCount, standing.Rows.Count);
         }
 
         [TestMethod]

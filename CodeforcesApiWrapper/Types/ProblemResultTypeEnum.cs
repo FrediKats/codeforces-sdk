@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace CodeforcesApiWrapper.Types
 {
 	/// <summary>
@@ -5,7 +7,9 @@ namespace CodeforcesApiWrapper.Types
 	/// </summary>
 	public enum ProblemResultTypeEnum
 	{
+		[EnumMember(Value = "PRELIMINARY")]
 		Preliminary,
+		[EnumMember(Value = "FINAL")]
 		Final,
 	}
 }

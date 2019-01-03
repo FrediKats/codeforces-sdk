@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace CodeforcesApiWrapper.Types
 {
 	/// <summary>
@@ -9,13 +11,16 @@ namespace CodeforcesApiWrapper.Types
 		/// 	Action time, in unix format.
 		/// </summary>
 		public int TimeSeconds { get; set; }
+	
 		/// <summary>
 		/// 	Can be absent.
 		/// </summary>
 		public BlogEntry BlogEntry { get; set; }
+	
 		/// <summary>
 		/// 	Can be absent.
 		/// </summary>
 		public Comment Comment { get; set; }
+	
 	}
 }
