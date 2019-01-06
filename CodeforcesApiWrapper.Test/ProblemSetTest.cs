@@ -23,6 +23,27 @@ namespace CodeforcesApiWrapper.Test
         }
 
         [TestMethod]
+        public void ProblemsTagsTest()
+        {
+            var codeforces = new Codeforces();
+            var tags = new List<string>
+            {
+                "implementation",
+                "math"
+            };
+            var tagsArgument = new TagsArgument(tags);
+
+            ResponseContainer<ProblemsMethodResponse> response =
+                codeforces.ProblemSet.Problems(tags: tagsArgument).Result;
+
+            Assert.AreEqual("OK", response.Status);
+
+            ProblemsMethodResponse data = response.Result;
+            Assert.IsNotNull(data.ProblemStatistics);
+            Assert.IsNotNull(data.Problems);
+        }
+
+        [TestMethod]
         public void RecentStatusTest()
         {
             const int elementsCount = 10;

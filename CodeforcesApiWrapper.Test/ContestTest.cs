@@ -81,7 +81,7 @@ namespace CodeforcesApiWrapper.Test
             var codeforces = new Codeforces();
             const int elementCount = 10;
             ResponseContainer<Standing> response =
-                codeforces.Contest.Standings(556, 2, count: elementCount, showUnofficial: true).Result;
+                codeforces.Contest.Standings(556, 2, elementCount, showUnofficial: true).Result;
 
             Assert.AreEqual("OK", response.Status);
 
@@ -91,6 +91,35 @@ namespace CodeforcesApiWrapper.Test
             Assert.IsNotNull(standing.Problems);
             Assert.IsNotNull(standing.Rows);
             Assert.AreEqual(elementCount, standing.Rows.Count);
+        }
+
+        [TestMethod]
+        public void StandingsWithHandlesListTest()
+        {
+            var codeforces = new Codeforces();
+
+            var handles = new List<string>
+            {
+                "Radewoosh",
+                "I_love_Tanya_Romanova"
+            };
+            var handlesArg = new HandlesArgument(handles);
+            ResponseContainer<Standing> response =
+                codeforces.Contest.Standings(566, handles: handlesArg).Result;
+
+            Assert.AreEqual("OK", response.Status);
+
+            Standing standing = response.Result;
+            Assert.IsNotNull(standing);
+            Assert.IsNotNull(standing.Contest);
+            Assert.IsNotNull(standing.Problems);
+            Assert.IsNotNull(standing.Rows);
+            Assert.IsTrue(standing
+                .Rows
+                .Any(row => row
+                    .Party
+                    .Members
+                    .Any(member => member.Handle == handles.First())));
         }
 
         [TestMethod]

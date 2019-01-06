@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeforcesApiWrapper.NonStandardTypes;
 using CodeforcesApiWrapper.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,12 +24,20 @@ namespace CodeforcesApiWrapper.Test
         public void InfoTest()
         {
             var codeforces = new Codeforces();
-            ResponseContainer<List<User>> response = codeforces.User.Info("enosha_slexsy").Result;
+            var handles = new List<string>
+            {
+                "enosha_slexsy",
+                "Radewoosh",
+                "I_love_Tanya_Romanova"
+            };
+            var handlesArg = new HandlesArgument(handles);
+            ResponseContainer<List<User>> response = codeforces.User.Info(handlesArg).Result;
 
             Assert.AreEqual("OK", response.Status);
 
             List<User> users = response.Result;
             Assert.IsNotNull(users);
+            Assert.AreEqual(3, users.Count);
         }
 
         [TestMethod]

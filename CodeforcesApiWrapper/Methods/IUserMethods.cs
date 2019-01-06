@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CodeforcesApiWrapper.NonStandardTypes;
 using CodeforcesApiWrapper.Types;
 using Refit;
 
@@ -12,9 +13,8 @@ namespace CodeforcesApiWrapper.Methods
 
         //TODO: Add user.friends
 
-        //TODO: Implement list as parameter
         [Get("/user.info")]
-        Task<ResponseContainer<List<User>>> Info(string handles);
+        Task<ResponseContainer<List<User>>> Info(HandlesArgument handles);
 
         [Get("/user.ratedList")]
         Task<ResponseContainer<List<User>>> RatedList(bool? activeOnly = null);
