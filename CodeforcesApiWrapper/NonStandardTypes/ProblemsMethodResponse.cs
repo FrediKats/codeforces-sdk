@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeforcesApiWrapper.Types;
 
-namespace CodeforcesApiWrapper.NonStandartTypes
+namespace CodeforcesApiWrapper.NonStandardTypes
 {
     public class ProblemsMethodResponse
     {

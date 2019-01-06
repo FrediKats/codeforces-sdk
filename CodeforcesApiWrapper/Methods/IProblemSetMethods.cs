@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using CodeforcesApiWrapper.NonStandartTypes;
+using CodeforcesApiWrapper.NonStandardTypes;
 using CodeforcesApiWrapper.Types;
 using Refit;
 

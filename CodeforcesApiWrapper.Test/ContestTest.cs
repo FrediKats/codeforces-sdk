@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CodeforcesApiWrapper.NonStandartTypes;
+using CodeforcesApiWrapper.NonStandardTypes;
 using CodeforcesApiWrapper.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
