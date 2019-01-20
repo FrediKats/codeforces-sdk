@@ -33,10 +33,10 @@ Each method call returns a JSON-object (`ResponseContainer<T>`) with three possi
 
 ## TODO:
 
-- [ ] Fix some problems with API docs
 - [x] Add missing method with argument list (like `user.info`)
+- [x] Build as nuget package and add to marketplace
+- [ ] Fix some problems with API docs
 - [ ] Add methods with access token
 - [ ] Implement other language code-generationg
 - [ ] Remove "dirty hacks from code"
-- [ ] Build as nuget package and add to marketplace
 - [ ] Return full data if no handles from arguments wasn't found. Seem like bug
