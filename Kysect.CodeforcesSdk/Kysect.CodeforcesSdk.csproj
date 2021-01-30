@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Version>0.0.4</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Fredi Kats</Authors>
+    <Description>Codeforces API implementation in .NET</Description>
+    <PackageProjectUrl>https://github.com/kysect/codeforces-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kysect/codeforces-sdk</RepositoryUrl>
+    <PackageTags>codeforces</PackageTags>
+    <PackageLicenseUrl>https://github.com/InRedikaWB/CodeforcesApiWrapper/blob/master/LICENSE</PackageLicenseUrl>
+    <Company>Kysect</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit" Version="4.6.58" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Types\" />
+  </ItemGroup>
+
+</Project>
